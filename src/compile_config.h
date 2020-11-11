@@ -6,6 +6,7 @@
 //#define CMP_CC1101
 //#define ARDUINO_ATMEGA328P_MINICUL 1                           // minicul with CC1101
 //#define ARDUINO_AVR_ICT_BOARDS_ICT_BOARDS_AVR_RADINOCC1101 1;  // radino with CC1101
+//#define ARDUINO_BUSWARE_CUL 1;                                 // BusWare CUL V3
 //#define OTHER_BOARD_WITH_CC1101  1                             // boards with CC1101 (example, ESP8266, ESP32, Maple Mini ...)
 
 //Enable debug option here:
@@ -36,6 +37,9 @@
 	#define CMP_CC1101
 #endif
 
+#ifdef ARDUINO_BUSWARE_CUL
+        #define CMP_CC1101
+#endif
 
 #ifdef ARDUINO_MAPLEMINI_F103CB           // STM32F103CBT6
 	//#define WATCHDOG_STM32 1              // enabled ARDUINO_MAPLEMINI_F103CB Watchdog option
@@ -58,6 +62,11 @@
 		#define digitalPinToInterrupt(p) ((p) == 0 ? 2 : ((p) == 1 ? 3 : ((p) == 2 ? 1 : ((p) == 3 ? 0 : ((p) == 7 ? 4 : NOT_AN_INTERRUPT)))))
 		#define PIN_MARK433           4
 		#define SS                    8  
+	#elif ARDUINO_BUSWARE_CUL
+		#define PIN_LED               LED_BUILTIN
+		#define PIN_SEND              GDO0   // gdo0Pin TX out
+		#define PIN_RECEIVE           GDO2   // gdo2
+		#define PIN_MARK433           MARK433
 	#elif ARDUINO_ATMEGA328P_MINICUL      // 8Mhz
 		#define PIN_LED               4
 		#define PIN_SEND              2   // gdo0Pin TX out

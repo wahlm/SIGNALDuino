@@ -89,6 +89,14 @@ char IB_1[14]; // Input Buffer one - capture commands
 
 
 void setup() {
+
+#ifdef ARDUINO_BUSWARE_CUL
+	noInterrupts();
+	CLKPR = _BV(CLKPCE); // enable change of the clock prescaler
+	CLKPR = 0x0;  // divide frequency by 1
+	interrupts();
+#endif
+
 	Serial.begin(BAUDRATE);
 	while (!Serial) {
 		; // wait for serial port to connect. Needed for native USB
@@ -99,6 +107,9 @@ void setup() {
 	//delay(2000);
 	pinAsInput(PIN_RECEIVE);
 	pinAsOutput(PIN_LED);
+#ifdef ARDUINO_BUSWARE_CUL
+	pinAsOutput(SS);
+#endif
 	// CC1101
 	
 	//wdt_reset();
